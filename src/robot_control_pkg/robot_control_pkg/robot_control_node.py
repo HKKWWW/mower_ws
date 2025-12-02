@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# robot_control_pkg/robot_control_node.py
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -25,7 +25,7 @@ class RobotControlNode(Node):
                                         timeout=1.0)
                 
                 self.get_logger().info("--- Serial Port initialized, " \
-                                        "ROS has connected STM32---")
+                                        "ROS has connected STM32 ---")
                 time.sleep(0.5)
                 break
 

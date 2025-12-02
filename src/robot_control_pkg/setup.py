@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'robot_control'
+package_name = 'robot_control_pkg'
 
 setup(
     name=package_name,
@@ -14,7 +14,7 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='hkkwww',
-    maintainer_email='hkkwww@todo.todo',
+    maintainer_email='hkkwww@163.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     extras_require={
@@ -24,7 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'robot_control_node = robot_control.robot_control_node:main'
+            'robot_control_node = robot_control.robot_control_node:main',
+            'pub_odom_tf_node = robot_control.pub_odom_tf_node:main'
         ],
     },
 )
