@@ -1,0 +1,57 @@
+# ROS 2 workspace and build artifacts
+
+build/
+install/
+log/
+
+# Colcon and ament
+
+.ros/
+*.overlay
+
+# CMake generated files
+
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiler output
+
+*.o
+*.obj
+*.so
+*.a
+*.lo
+*.la
+*.db
+
+# Python artifacts
+
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Logs and coverage
+
+*.log
+.coverage
+coverage.xml
+
+# Editor and IDE directories
+
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS generated files
+
+.DS_Store
+Thumbs.db
+
+# Miscellaneous
+
+# Add other directories or files to ignore below as needed
+record/
