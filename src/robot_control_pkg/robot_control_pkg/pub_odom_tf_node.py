@@ -23,7 +23,7 @@ class OdomSerialImuNode(Node):
         # 初始化串口
         while True:
             try:
-                self.ser = serial.Serial(port='/dev/tty_stm32',
+                self.ser = serial.Serial(port='/dev/stm32',
                                         baudrate=9600,
                                         timeout=1.0)
                 

@@ -30,4 +30,10 @@ KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523",ATTRS{devpa
 
 KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523",ATTRS{devpath}=="8", MODE:="0777", SYMLINK+="stm32"
 ```
+运行：
+``` bash
+sudo service udev reload
+sudo service udev restart
+sudo udevadm control --reload && sudo udevadm trigger
+```
 e.g. -> **查询 KERNELS=="1-5" 下的 ATTRS{devpath}=="5"**，使用 `devpath` 去映射，尝试使用 `KERNERLS` 没有成功，未查明原因

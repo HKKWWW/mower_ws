@@ -24,8 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'robot_control_node = robot_control.robot_control_node:main',
-            'pub_odom_tf_node = robot_control.pub_odom_tf_node:main'
+            'robot_control_node = robot_control_pkg.robot_control_node:main',
+            'pub_odom_tf_node = robot_control_pkg.pub_odom_tf_node:main'
         ],
     },
 )
