@@ -16,7 +16,7 @@ class OdomSerialImuNode(Node):
     def __init__(self):
         super().__init__('odom_serial_imu_node')
 
-        self.create_subscription(Imu, '/imu', self.imu_callback, 10)  # IMU 订阅
+        self.create_subscription(Imu, '/imu/data_raw', self.imu_callback, 3)  # IMU 订阅
         self.odom_pub = self.create_publisher(Odometry, '/odom', 10)  # odom 发布
         self.tf_broadcaster = TransformBroadcaster(self)  # tf 广播
 
@@ -55,6 +55,7 @@ class OdomSerialImuNode(Node):
         siny_cosp = 2.0 * (q.w * q.z + q.x * q.y)
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         self.yaw = math.atan2(siny_cosp, cosy_cosp)
+        # self.get_logger().info("yaw: %.2f" % self.yaw)
 
     def read_wheel(self):
         if self.ser is None:
@@ -63,38 +64,21 @@ class OdomSerialImuNode(Node):
         # 向 MCU 发送请求
         send = bytes([0x56, 0x91, 0xcc, 0, 0, 0, 0, 0x11])
         self.ser.write(send)
-        time.sleep(0.001)
+        time.sleep(0.005)
 
-        # 等待数据
-        # 假设 MCU 依次返回左右轮速度帧
-        got_L = False
-        got_R = False
-        vL = None
-        vR = None
-
-        t0 = time.time()
-        timeout = 0.05  # 50 ms 超时
-        while time.time() - t0 < timeout:
-            if self.ser.in_waiting >= 8:
-                data = self.ser.read(8)
-                if len(data) != 8:
-                    continue
-                if data[0] == 0x56 and data[1] == 0x91 and data[7] == 0x11:
-                    kind = data[2]
-                    value = struct.unpack('<f', data[3:7])[0]
-                    if kind == 0x55:
-                        got_L = True
-                        vL = value
-                    elif kind == 0x66:
-                        got_R = True
-                        vR = value
-                if got_L and got_R:
-                    break
-
-        if got_L and got_R:
-            self.vL = vL
-            self.vR = vR
-            return True
+        if self.ser.in_waiting >= 8:
+            data = self.ser.read(16)
+            if len(data) < 16:
+                return False
+            # self.get_logger().info("received: %s" % data)
+            if data[0] == 0x56 and data[1] == 0x91 and data[7] == 0x11 and \
+                 data[8] == 0x56 and data[9] == 0x91 and data[15] == 0x11:
+                valueL = struct.unpack('<f', data[2:6])[0]
+                valueR = struct.unpack('<f', data[10:14])[0]
+                self.vL = valueL
+                self.vR = valueR
+                # self.get_logger().info("vL: %.2f, vR: %.2f" % (valueL, valueR))
+                return True
         else:
             return False
 
@@ -105,7 +89,7 @@ class OdomSerialImuNode(Node):
             return
 
         if not self.read_wheel():
-            # 没拿到完整轮速，就跳过这次 odom 更新
+            self.get_logger().warning("当前帧无法读取轮速数据")
             return
 
         # 轮速是 cm/s → 转为 m/s

@@ -4,6 +4,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+
 def generate_launch_description():
     # 定位到功能包的地址
     pkg_share = FindPackageShare(package='cartographer_pkg').find('cartographer_pkg')

@@ -23,7 +23,7 @@ options = {
   provide_odom_frame = true,                -- 由 Cartographer 发布 map->odom
   publish_frame_projected_to_2d = true,     -- 仅发布 2D 位姿
 
-  use_odometry = false,                      -- 使用 /odom（x,y,yaw 即可）
+  use_odometry = true,                      -- 使用 /odom（x,y,yaw 即可）
   use_nav_sat = false,
   use_landmarks = false,
 
