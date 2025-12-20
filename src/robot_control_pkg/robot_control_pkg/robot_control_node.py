@@ -48,7 +48,7 @@ class RobotControlNode(Node):
         if self.ser is None:
             return
 
-        self.get_logger().info("Recv V")
+        # self.get_logger().info("Recv V")
 
         v = msg.linear.x
         w = msg.angular.z

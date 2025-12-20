@@ -61,6 +61,17 @@ def generate_launch_description():
         ]
     )
 
+    # 启动 mower_description.launch.py 
+    mower_description_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory('mower_description'),
+                'launch',
+                'mower_description.launch.py'
+            )
+        )
+    )
+
     # 启动 cartographer.launch.py 
     cartographer_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -78,6 +89,8 @@ def generate_launch_description():
     ld.add_action(wit_ros2_imu)
     ld.add_action(rplidar_launch)
     ld.add_action(static_tf)
+    ld.add_action(mower_description_launch)
     ld.add_action(cartographer_launch)
+    
 
     return ld

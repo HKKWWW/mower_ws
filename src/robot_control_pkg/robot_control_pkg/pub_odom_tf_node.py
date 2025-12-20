@@ -10,11 +10,11 @@ import struct
 import math
 import time
 
-WHEEL_D = 0.346  # 轮距 (m); 根据你 MCU 宏 WHEEL_D
+WHEEL_D = 0.346  # 轮距 (m)
 
 class OdomSerialImuNode(Node):
     def __init__(self):
-        super().__init__('odom_serial_imu_node')
+        super().__init__('pub_odom_tf_node')
 
         self.create_subscription(Imu, '/imu/data_raw', self.imu_callback, 3)  # IMU 订阅
         self.odom_pub = self.create_publisher(Odometry, '/odom', 10)  # odom 发布
