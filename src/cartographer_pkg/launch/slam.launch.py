@@ -49,7 +49,7 @@ def generate_launch_description():
     )
 
     # static_transform_publisher
-    static_tf = Node(
+    lidar_static_tf = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         output='screen',
@@ -58,6 +58,18 @@ def generate_launch_description():
             '0', '0', '0',    # roll pitch yaw 
             'base_link',      # frame_id
             'laser'           # child_frame_id
+        ]
+    )
+
+    imu_static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        arguments=[
+            '0', '0', '0',    # x y z
+            '0', '0', '0',    # roll pitch yaw 
+            'base_link',      # frame_id
+            'imu'           # child_frame_id
         ]
     )
 
@@ -88,7 +100,8 @@ def generate_launch_description():
     ld.add_action(robot_control_node)
     ld.add_action(wit_ros2_imu)
     ld.add_action(rplidar_launch)
-    ld.add_action(static_tf)
+    ld.add_action(lidar_static_tf)
+    ld.add_action(imu_static_tf)
     ld.add_action(mower_description_launch)
     ld.add_action(cartographer_launch)
     

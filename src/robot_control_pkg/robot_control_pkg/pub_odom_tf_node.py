@@ -16,7 +16,7 @@ class OdomSerialImuNode(Node):
     def __init__(self):
         super().__init__('pub_odom_tf_node')
 
-        self.create_subscription(Imu, '/imu/data_raw', self.imu_callback, 3)  # IMU 订阅
+        self.create_subscription(Imu, '/imu', self.imu_callback, 3)  # IMU 订阅
         self.odom_pub = self.create_publisher(Odometry, '/odom', 10)  # odom 发布
         self.tf_broadcaster = TransformBroadcaster(self)  # tf 广播
 

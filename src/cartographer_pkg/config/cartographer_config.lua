@@ -53,7 +53,7 @@ TRAJECTORY_BUILDER_2D.max_range = 3.5
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 3.0
 
 -- 使用 IMU（要求 /imu 或 remap 后的 /imu_cart 提供三轴 gyro/accel，含重力）
-TRAJECTORY_BUILDER_2D.use_imu_data = false
+TRAJECTORY_BUILDER_2D.use_imu_data = true
 -- 机器狗抖动较大，增大重力时间常数更稳（可在 15~25 之间微调）
 TRAJECTORY_BUILDER_2D.imu_gravity_time_constant = 20.0
 
